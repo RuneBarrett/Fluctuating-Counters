@@ -12,6 +12,7 @@ class Counter
 {
 public:
   Counter(int val, int speed, bool up);
+  Counter(int val, int speed, bool up, int down, int upLim);
   Counter();
   int getVal();
   void count();
@@ -21,5 +22,7 @@ private:
   int _speed;
   bool _up;
   int _frames;
+  int _upLim;
+  int _downLim;
 };
 #endif

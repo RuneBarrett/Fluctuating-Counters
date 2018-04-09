@@ -4,9 +4,27 @@
 Counter::Counter(int val, int speed, bool up)
 {
   _val = val;
-  _speed = speed;
+  if(speed < 1)
+    _speed = 1;
+  else
+    _speed = speed;
   _up = up;
   _frames = 1;
+  _upLim = 255;
+  _downLim = 0;
+}
+
+Counter::Counter(int val, int speed, bool up, int down, int upLim)
+{
+  _val = val;
+  if(speed < 1)
+    _speed = 1;
+  else
+    _speed = speed;
+  _up = up;
+  _frames = 1;
+  _upLim = upLim;
+  _downLim = down;
 }
 
 Counter::Counter(){
@@ -27,19 +45,21 @@ void Counter::count()
   // increment
   if(_frames % 500 == 0)
   {
-    if(_up)
-      _val+=_speed;
-    else
-      _val-=_speed;
+      if(_up)
+        _val+=_speed;
+      else
+        _val-=_speed;
+
+    if(_val >= _upLim) _val = _upLim;
+    if(_val <= _downLim) _val = _downLim;
+
+    //switch between up and down
+    if (_val >= _upLim)
+      _up = false;
+    if (_val <= _downLim)
+      _up = true;
   }
-  if(_val > 254) _val = 255;
-  if(_val < 1) _val = 0;
-  //switch between up and down
-  if (_val > 254)
-    _up = false;
-  if (_val < 1)
-    _up = true;
-  if(_frames > 9999999)
+  if(_frames > 999999)
       _frames = 1;
 }
 
